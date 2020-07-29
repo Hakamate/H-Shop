@@ -1,4 +1,5 @@
 # Nuxt-eCommerce-Website
+This is a Nuxt e-commerce website
 
 ## Build Setup
 
