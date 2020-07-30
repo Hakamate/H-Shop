@@ -8,14 +8,13 @@
             style="background-color: #F7F7F7F7"
             class="white--text align-end"
             height="200px"
-            :src="require(`~/assets/img/${item.image}`)"
-          >
-          </v-img>
+            :src="`./img/${item.image}`"
+          ></v-img>
           <v-card-title class="pb-0 text-body-1">{{item.title}}</v-card-title>
 
           <v-card-actions class="h3">
             <p class="my-0 mx-2 black--text">{{item.price}} €</p>
-            
+
             <v-btn icon color="primary">
               <v-icon>mdi-cart</v-icon>
             </v-btn>
@@ -31,38 +30,19 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   components: {},
   data() {
     return {
-      items: [
-        {
-          title: "Gant tech",
-          price: 10,
-          image: "gant.png",
-        },
-        {
-          title: "Bonnet de noël",
-          price: 7,
-          image: "bonnet.png",
-        },
-        {
-          title: "T-Shirt Baseball",
-          price: 9,
-          image: "t-shirt.png",
-        },
-        {
-          title: "Pantalon classique",
-          price: 19,
-          image: "pantalon.png",
-        },
-        {
-          title: "Pull d'hiver zouz",
-          price: 22,
-          image: "pull.png",
-        },
-      ],
+      items: [],
     };
+  },
+  mounted() {
+    axios.get("http://127.0.0.1:3333/api/products").then((res) => {
+      this.items = res.data;
+    });
   },
 };
 </script>

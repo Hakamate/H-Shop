@@ -23,6 +23,19 @@
       </v-list>
 
       <v-divider></v-divider>
+      <v-list dense nav>
+        <v-list-item v-for="item in adminPages" :key="item.title" link :to="item.to">
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-divider></v-divider>
       <v-list dense nav class="align-self-end">
         <v-list-item v-for="item in accountPages" :key="item.title" link :to="item.to">
           <v-list-item-icon>
@@ -86,6 +99,13 @@ export default {
           icon: "mdi-basket",
           title: "Shop",
           to: "/shop",
+        },
+      ],
+      adminPages: [
+        {
+          icon: "mdi-shopping-search",
+          title: "Edit Shop",
+          to: "/editShop",
         },
       ],
       accountPages: [
