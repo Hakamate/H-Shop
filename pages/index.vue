@@ -5,7 +5,7 @@
     align-center
   >
     <h1>Welcome Page</h1>
-    <nuxt-link to="/shop"
+    <nuxt-link to="/product/catalog"
       >Shop</nuxt-link
     >
   </v-layout>

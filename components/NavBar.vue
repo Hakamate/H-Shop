@@ -1,6 +1,6 @@
 <template>
-  <v-app-bar class="pl-0" color="#457b9d" fixed app dark>
-    <v-navigation-drawer fixed app v-model="drawer" hide-overlay class="d-flex flex-column">
+  <v-app-bar color="#457b9d" fixed app dark>
+    <v-navigation-drawer fixed app absolute temporary v-model="drawer" hide-overlay class="d-flex flex-column">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title d-flex">
@@ -12,19 +12,6 @@
       <v-divider></v-divider>
       <v-list dense nav>
         <v-list-item v-for="item in explorePages" :key="item.title" link :to="item.to">
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-
-      <v-divider></v-divider>
-      <v-list dense nav>
-        <v-list-item v-for="item in adminPages" :key="item.title" link :to="item.to">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -98,14 +85,7 @@ export default {
         {
           icon: "mdi-basket",
           title: "Shop",
-          to: "/shop",
-        },
-      ],
-      adminPages: [
-        {
-          icon: "mdi-shopping-search",
-          title: "Edit Shop",
-          to: "/editShop",
+          to: "/product/catalog",
         },
       ],
       accountPages: [
@@ -135,5 +115,6 @@ export default {
 <style>
 .v-toolbar__content {
   padding-left: 0;
+  padding-right: 0;
 }
 </style>
