@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" width="auto">
+  <v-content class="mx-auto" width="auto">
     <v-btn color="primary" class="ml-auto" :to="`/product/${$route.params.id}/show`">
       Show Product
       <v-icon class="ml-3">mdi-pencil-box-multiple</v-icon>
@@ -14,7 +14,6 @@
     </v-btn>
     <v-img
       to="/inspire"
-      style="background-color: #F7F7F7F7"
       class="white--text align-end"
       width="300"
       :src="require(`~/assets/img/${item.image}`)"
@@ -42,7 +41,7 @@
       </v-row>
       <v-btn color="success" @click="checkForm">Update Product</v-btn>
     </v-container>
-  </v-card>
+  </v-content>
 </template>
     
 <script>

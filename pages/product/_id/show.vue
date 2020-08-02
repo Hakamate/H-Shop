@@ -71,7 +71,6 @@ export default {
         },
       });
 
-      console.log(product.data);
       this.item = product.data;
     } catch (e) {
       console.error(e);

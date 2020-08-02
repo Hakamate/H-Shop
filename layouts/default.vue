@@ -18,3 +18,11 @@ export default {
   },
 };
 </script>
+<style>
+::-webkit-scrollbar{
+  width: 10px;
+}
+::-webkit-scrollbar-thumb{
+  background: rgb(177, 177, 177);
+}
+</style>

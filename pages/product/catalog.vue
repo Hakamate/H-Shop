@@ -3,7 +3,9 @@
     <v-row justify="center" class="mb-4">
       <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="success" dark v-bind="attrs" v-on="on">Add Article</v-btn>
+          <v-btn color="success" dark v-bind="attrs" v-on="on"
+            >Add Article</v-btn
+          >
         </template>
         <v-card>
           <v-card-title>
@@ -13,7 +15,11 @@
             <v-container>
               <v-row>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field label="Title*" required v-model="addProduct.title"></v-text-field>
+                  <v-text-field
+                    label="Title*"
+                    required
+                    v-model="addProduct.title"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
                   <v-text-field
@@ -34,7 +40,12 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <v-textarea auto-grow v-model="addProduct.description" label="Description*" required></v-textarea>
+                  <v-textarea
+                    auto-grow
+                    v-model="addProduct.description"
+                    label="Description*"
+                    required
+                  ></v-textarea>
                 </v-col>
               </v-row>
             </v-container>
@@ -51,7 +62,12 @@
 
     <v-row>
       <v-col v-for="item in items" :key="item.id" cols="6" sm="4">
-        <v-card class="mx-auto" width="auto" max-width="400" :to="`/product/${item.id}/show`">
+        <v-card
+          class="mx-auto"
+          width="auto"
+          max-width="400"
+          :to="`/product/${item.id}/show`"
+        >
           <v-img
             to="/inspire"
             style="background-color: #F7F7F7F7"
@@ -59,11 +75,11 @@
             height="200px"
             :src="require(`~/assets/img/${item.image}`)"
           ></v-img>
-          <v-card-title class="pb-0 text-body-1">{{item.title}}</v-card-title>
+          <v-card-title class="pb-0 text-body-1">{{ item.title }}</v-card-title>
 
           <v-card-actions class="h3">
             <p class="my-0 mx-2 black--text">
-              <b>{{item.price}} €</b>
+              <b>{{ item.price }} €</b>
             </p>
 
             <v-btn icon color="warning">
@@ -74,7 +90,12 @@
               <v-icon>mdi-heart</v-icon>
             </v-btn>
 
-            <v-btn icon color="primary" class="ml-auto" :to="`/product/${item.id}/edit`">
+            <v-btn
+              icon
+              color="primary"
+              class="ml-auto"
+              :to="`/product/${item.id}/edit`"
+            >
               <v-icon>mdi-pencil-box-multiple</v-icon>
             </v-btn>
           </v-card-actions>
@@ -95,17 +116,15 @@ export default {
       addProduct: {
         title: null,
         price: null,
-        image: null,
+        image: null
       },
-      dialog: false,
+      dialog: false
     };
   },
   async mounted() {
     try {
       const products = await axios.get("http://127.0.0.1:3333/api/getproducts");
-
       this.items = products.data;
-      console.table(products.data);
     } catch (e) {
       console.error(e);
     }
@@ -117,20 +136,17 @@ export default {
         const response = await axios.post(
           "http://127.0.0.1:3333/api/storeproduct",
           {
-            params: this.addProduct,
+            params: this.addProduct
           }
         );
-        console.log(response.data);
-        this.items = response.data;
-        this.$router.push(`/product/catalogue`);
+        // this.items.unshift(response.data);
+        this.items = [response.data, ...this.items];
       } catch (e) {
         console.error(e);
       }
-
       this.dialog = false;
-    },
-  },
+    }
+  }
 };
 </script>
-<style>
-</style>
+<style></style>
