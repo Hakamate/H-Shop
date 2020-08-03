@@ -123,7 +123,7 @@ export default {
   },
   async mounted() {
     try {
-      const products = await axios.get("http://127.0.0.1:3333/api/getproducts");
+      const products = await this.$axios.get('getproducts');
       this.items = products.data;
     } catch (e) {
       console.error(e);
@@ -133,8 +133,8 @@ export default {
   methods: {
     async checkForm() {
       try {
-        const response = await axios.post(
-          "http://127.0.0.1:3333/api/storeproduct",
+        const response = await this.$axios.post(
+          "storeproduct",
           {
             params: this.addProduct
           }

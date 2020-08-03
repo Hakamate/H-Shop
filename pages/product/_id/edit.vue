@@ -1,5 +1,5 @@
 <template>
-  <v-content class="mx-auto" width="auto">
+  <v-main class="mx-auto" width="auto">
     <v-btn color="primary" class="ml-auto" :to="`/product/${$route.params.id}/show`">
       Show Product
       <v-icon class="ml-3">mdi-pencil-box-multiple</v-icon>
@@ -41,7 +41,7 @@
       </v-row>
       <v-btn color="success" @click="checkForm">Update Product</v-btn>
     </v-container>
-  </v-content>
+  </v-main>
 </template>
     
 <script>

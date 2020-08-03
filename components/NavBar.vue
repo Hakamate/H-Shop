@@ -1,6 +1,14 @@
 <template>
   <v-app-bar color="#457b9d" fixed app dark>
-    <v-navigation-drawer fixed app absolute temporary v-model="drawer" hide-overlay class="d-flex flex-column">
+    <v-navigation-drawer
+      fixed
+      app
+      absolute
+      temporary
+      v-model="drawer"
+      hide-overlay
+      class="d-flex flex-column"
+    >
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title d-flex">
@@ -24,15 +32,23 @@
 
       <v-divider></v-divider>
       <v-list dense nav class="align-self-end">
-        <v-list-item v-for="item in accountPages" :key="item.title" link :to="item.to">
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+        <div v-for="item in accountPages" :key="item.title">
+          <v-list-item
+            v-if="
+              (isAuthenticated && (item.title != 'Login' && item.title != 'Register'))|| 
+              (!loggedInUser && (item.title != 'Logout' && item.title != 'Your Account'))"
+            link
+            :to="item.to"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </div>
       </v-list>
     </v-navigation-drawer>
 
@@ -52,26 +68,26 @@
     ></v-text-field>
 
     <v-bottom-navigation background-color="rgb(0,0,0,0)" width="auto" style="box-shadow: none">
-      <v-btn value="Card">
+      <v-btn value="Card" to="/user/cart">
         <span>Cart</span>
         <v-icon>mdi-cart</v-icon>
       </v-btn>
 
-      <v-btn value="favorites">
+      <v-btn value="favorites" to="/user/wish">
         <span>Wish</span>
         <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn value="nearby">
-        <span>Setting</span>
-        <v-icon>mdi-cog</v-icon>
       </v-btn>
     </v-bottom-navigation>
   </v-app-bar>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
+  computed: {
+    ...mapGetters(["loggedInUser", "isAuthenticated"]),
+  },
   data() {
     return {
       drawer: false,
@@ -92,17 +108,27 @@ export default {
         {
           icon: "mdi-account",
           title: "Your Account",
-          to: "/",
+          to: "/user/profile",
         },
         {
           icon: "mdi-account-question",
           title: "Help",
-          to: "/",
+          to: "/user/help",
+        },
+        {
+          icon: "mdi-account-plus",
+          title: "Register",
+          to: "/auth/register",
+        },
+        {
+          icon: "mdi-login-variant",
+          title: "Login",
+          to: "/auth/login",
         },
         {
           icon: "mdi-logout-variant",
-          title: "Log Out",
-          to: "/",
+          title: "Logout",
+          to: "/auth/logout",
         },
       ],
       right: true,
@@ -110,9 +136,17 @@ export default {
       title: "Vuetify.js",
     };
   },
+  methods: {
+    async logout() {
+      await this.$auth.logout();
+    },
+  },
 };
 </script>
 <style>
+#logout {
+  cursor: pointer;
+}
 .v-toolbar__content {
   padding-left: 0;
   padding-right: 0;
