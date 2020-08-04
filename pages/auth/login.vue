@@ -1,28 +1,12 @@
 <template>
-  <ValidationObserver ref="observer" v-slot="{ validate, reset }">
-    <form>
-      <ValidationProvider v-slot="{ errors }" name="email" rules="required|email">
-        <v-text-field v-model="email" :error-messages="errors" label="E-mail" required></v-text-field>
-      </ValidationProvider>
-      <ValidationProvider v-slot="{ errors }" name="password" rules="required">
-        <v-text-field
-          v-model="password"
-          :error-messages="errors"
-          label="Password"
-          type="password"
-          required
-        ></v-text-field>
-      </ValidationProvider>
+  <v-form ref="form" v-model="valid" lazy-validation>
+    <div>{{error}}</div>
+    <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
 
-      <v-btn class="mr-4" @click="login">submit</v-btn>
-      <v-btn @click="clear">clear</v-btn>
-    </form>
+    <v-text-field v-model="password" :rules="passwordRules" label="Password" type="password" required></v-text-field>
 
-    <v-btn color="primary" to="/auth/register">
-      Register
-      <v-icon class="ml-2">mdi-account</v-icon>
-    </v-btn>
-  </ValidationObserver>
+    <v-btn :disabled="!valid" color="success" class="mr-4" @click="login">Validate</v-btn>
+  </v-form>
 </template>
 
 <script>
@@ -65,53 +49,56 @@ export default {
   },
   data() {
     return {
+      valid: true,
       email: "",
       password: "",
+      emailRules: [
+        (v) => !!v || "E-mail is required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
+      passwordRules: [
+        (v) => !!v || "Password is required",
+      ],
+      error: null,
     };
   },
   methods: {
     async login() {
-      try {
-        const validate = await this.$refs.observer.validate();
-        if (validate) {
-          this.$auth
-            .loginWith("local", {
-              data: {
-                email: this.email,
-                password: this.password,
-              },
-            })
-            .then(() => {
-              this.$notify({
-                group: "notification",
-                title: "Hello",
-                type: "success",
-                text: "You are now connected",
-              });
-            })
-            .catch(() => {
-              this.$notify({
-                group: "notification",
-                title: "Error",
-                type: "error",
-                text: "Please try it again in few minutes",
-              });
-            });
-        } else {
+      const validate = await this.$refs.form.validate();
+      if (validate) {
+        try {
+          await this.$auth.loginWith("local", {
+            data: {
+              email: this.email,
+              password: this.password,
+            },
+          });
           this.$notify({
             group: "notification",
-            title: "Warning",
-            type: "warn",
-            text: "Invalid Email/Password combinaison",
+            title: "Hello",
+            type: "success",
+            text: "Your are now connected",
           });
+        } catch (e) {
+
+          if(e.message !== "Network Error") {
+            this.error = e.response.data.message 
+            this.$notify({
+              group: "notification",
+              title: "Error",
+              type: "error",
+              text: e.response.data.message,
+            });
+          }else{
+            this.error = 'Serveur Problem Try it again in few minutes'
+            this.$notify({
+              group: "notification",
+              title: "Server Problem",
+              type: "error",
+              text: 'Try it again in few minutes',
+            });
+          }
         }
-      } catch (e) {
-        this.$notify({
-          group: "notification",
-          title: "Important message",
-          type: "error",
-          text: e.response.data.message,
-        });
       }
     },
     clear() {

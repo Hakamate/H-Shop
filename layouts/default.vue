@@ -3,8 +3,7 @@
     <NavBar />
     <v-main>
       <v-container>
-        <notifications group="notification"  
-               position="bottom right"/>
+        <notifications group="notification" position="bottom right"></notifications>
         <nuxt />
       </v-container>
     </v-main>
