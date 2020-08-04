@@ -1,7 +1,6 @@
 <template>
  <v-container>
   <form class="w-full max-w-lg" method="post" @submit.prevent="register">
-    <Notification :message="error" v-if="error" />
 
     <v-text-field v-model="email" label="Email" required />
 
@@ -17,10 +16,8 @@
 </template>
 
 <script>
-import Notification from '~/components/Notification'
 export default {
   components: {
-    Notification
   },
   data() {
     return {
