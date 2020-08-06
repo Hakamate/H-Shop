@@ -8,7 +8,7 @@
       Delete Product
       <v-icon class="ml-3">mdi-close-box</v-icon>
     </v-btn>
-        <v-btn color="warning" class="ml-auto" :to="`/product/catalog`">
+    <v-btn color="warning" class="ml-auto" :to="`/product/catalog`">
       Back to Shop
       <v-icon class="ml-3">mdi-arrow-left-circle</v-icon>
     </v-btn>
@@ -36,17 +36,15 @@
           ></v-text-field>
         </v-col>
         <v-col cols="10">
-          <v-textarea auto-grow v-model="item.description" label="Description*" required></v-textarea>
+          <v-textarea auto-grow rows="1" v-model="item.description" label="Description*" required></v-textarea>
         </v-col>
       </v-row>
-      <v-btn color="success" @click="checkForm">Update Product</v-btn>
+      <v-btn color="success" @click="updateProduct">Update Product</v-btn>
     </v-container>
   </v-main>
 </template>
-    
-<script>
-import axios from "axios";
 
+<script>
 export default {
   components: {},
   data() {
@@ -54,57 +52,35 @@ export default {
       item: {
         title: "wait",
         price: 0,
-        image: "pull.png",
-        description: "Je suis un wait",
+        image: "question.png",
+        description: "Wait description",
       },
     };
   },
   async mounted() {
-    try {
-      const product = await axios.get("http://127.0.0.1:3333/api/getproduct", {
-        params: {
-          id: this.$route.params.id,
-        },
-      });
-      this.item = product.data;
-    } catch (e) {
-      console.error(e);
-    }
+    const product = await this.getDataWithAxios("get", "getproduct", {
+        id: this.$route.params.id,
+    }, false);
+    this.item = product;
   },
 
   methods: {
-    async checkForm() {
-      try {
-        const product = await axios.post(
-          "http://127.0.0.1:3333/api/updateproduct",
-          {
-            params: {
-              id: this.$route.params.id,
-              product: this.item,
-            },
-          }
-        );
+    async updateProduct() {
+        const product = await this.getDataWithAxios("post", "updateproduct",
+        {          
+          id: this.$route.params.id,
+          product: this.item,
+        });
 
-        console.log(product);
-        this.$router.push(`/product/${this.$route.params.id}/show`);
-      } catch (e) {
-        console.error(e);
-      }
+      this.$router.push(`/product/${this.$route.params.id}/show`);
     },
     async deleteProduct() {
-      try {
-        const product = await axios.post(
-          "http://127.0.0.1:3333/api/deleteproduct",
-          {
-            params: {
-              id: this.$route.params.id,
-            },
-          }
-        );
-        this.$router.push(`/product/catalogue`);
-      } catch (e) {
-        console.error(e);
-      }
+      const product = await this.getDataWithAxios("post", "deleteproduct",
+      {
+        id: this.$route.params.id,
+      });
+
+      this.$router.push(`/product/catalog`);
     },
   },
 };

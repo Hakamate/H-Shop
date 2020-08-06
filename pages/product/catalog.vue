@@ -42,6 +42,7 @@
                 <v-col cols="12">
                   <v-textarea
                     auto-grow
+                    rows="1"
                     v-model="addProduct.description"
                     label="Description*"
                     required
@@ -53,7 +54,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="success" @click="checkForm">Add</v-btn>
+            <v-btn color="success" @click="storeProduct">Add</v-btn>
             <v-btn color="error" @click="dialog = false">Close</v-btn>
           </v-card-actions>
         </v-card>
@@ -61,7 +62,7 @@
     </v-row>
 
     <v-row>
-      <v-col v-for="item in items" :key="item.id" cols="6" sm="4">
+      <v-col v-for="item in items" :key="item.id" cols="6" sm="4" lg="3">
         <v-card
           class="mx-auto"
           width="auto"
@@ -112,7 +113,6 @@ export default {
   components: {},
   data() {
     return {
-      items: [],
       addProduct: {
         title: null,
         price: null,
@@ -121,26 +121,20 @@ export default {
       dialog: false
     };
   },
-  async mounted() {
+  async asyncData({$axios}) {
     try {
-      const products = await this.$axios.get('getproducts');
-      this.items = products.data;
+      const products = await $axios.get('getproducts');
+      return {items: products.data}
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   },
-
   methods: {
-    async checkForm() {
+    async storeProduct() {
       try {
-        const response = await this.$axios.post(
-          "storeproduct",
-          {
-            params: this.addProduct
-          }
-        );
+        const product = await this.getDataWithAxios("post", "storeproduct",this.addProduct);
         // this.items.unshift(response.data);
-        this.items = [response.data, ...this.items];
+        this.items = [product.data, ...this.items];
       } catch (e) {
         console.error(e);
       }
@@ -149,4 +143,3 @@ export default {
   }
 };
 </script>
-<style></style>

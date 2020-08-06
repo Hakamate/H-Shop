@@ -68,8 +68,8 @@
     ></v-text-field>
 
     <v-bottom-navigation background-color="rgb(0,0,0,0)" width="auto" style="box-shadow: none">
-      <v-btn value="Card" to="/user/cart">
-        <span>Cart</span>
+      <v-btn class="ml-2" value="Card" to="/user/cart">
+        <span width="0">Cart</span>
         <v-icon>mdi-cart</v-icon>
       </v-btn>
 
@@ -144,9 +144,6 @@ export default {
 };
 </script>
 <style>
-#logout {
-  cursor: pointer;
-}
 .v-toolbar__content {
   padding-left: 0;
   padding-right: 0;

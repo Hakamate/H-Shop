@@ -7,7 +7,12 @@
 export default {
   middleware: 'auth',
   mounted(){
-    this.$auth.logout()
+    try {
+      this.$auth.logout()
+      this.printNotification('success','Success', "You are now disconnected")
+    } catch (error) {
+      this.printNotification('error','Error', error.message)
+    }
   }
 }
 </script>

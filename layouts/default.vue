@@ -1,9 +1,9 @@
 <template>
   <v-app light>
+    <client-only><notifications group="notification" position="bottom right"></notifications></client-only> 
     <NavBar />
     <v-main>
       <v-container>
-        <notifications group="notification" position="bottom right"></notifications>
         <nuxt />
       </v-container>
     </v-main>

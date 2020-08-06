@@ -65,7 +65,7 @@ export default {
   },
   async mounted() {
     try {
-      const product = await axios.get("http://127.0.0.1:3333/api/getproduct", {
+      const product = await this.$axios("getproduct", {
         params: {
           id: this.$route.params.id,
         },
@@ -79,19 +79,12 @@ export default {
 
   methods: {
     async deleteProduct() {
-      try {
-        const product = await axios.post(
-          "http://127.0.0.1:3333/api/deleteproduct",
-          {
-            params: {
-              id: this.$route.params.id,
-            },
-          }
-        );
+        const product = await this.getDataWithAxios("post", "deleteproduct",
+        {
+          id: this.$route.params.id,
+        });
+
         this.$router.push(`/product/catalog`);
-      } catch (e) {
-        console.error(e);
-      }
     },
   },
 };

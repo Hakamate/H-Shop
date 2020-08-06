@@ -1,44 +1,44 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
-    <div>{{error}}</div>
-    <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+  <v-container fluid>
+    <v-row justify="center" align="center" style="height: 300px;">
+      <v-card>
+        <v-card-title class="px-4 green white--text">Login</v-card-title>
+        <v-card-actions class="pa-6">
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-text-field
+              prepend-icon="mdi-email"
+              v-model="email"
+              :rules="emailRules"
+              label="E-mail"
+              required
+            ></v-text-field>
 
-    <v-text-field v-model="password" :rules="passwordRules" label="Password" type="password" required></v-text-field>
+            <v-text-field
+              v-model="password"
+              :rules="passwordRules"
+              label="Password"
+              type="password"
+              required
+              class="mb-6"
+              prepend-icon="mdi-lock"
+            ></v-text-field>
 
-    <v-btn :disabled="!valid" color="success" class="mr-4" @click="login">Validate</v-btn>
-  </v-form>
+            <v-btn color="primary" to="/auth/register">
+              Register
+              <v-icon class="ml-2">mdi-account-plus</v-icon>
+            </v-btn>
+            <v-btn :disabled="!valid" color="success" @click="login">Validate</v-btn>
+          </v-form>
+        </v-card-actions>
+      </v-card>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 
-import { required, email } from "vee-validate/dist/rules";
-import {
-  extend,
-  ValidationObserver,
-  ValidationProvider,
-  setInteractionMode,
-} from "vee-validate";
-
-import { setTimeout } from "timers";
-
-setInteractionMode("eager");
-
-extend("required", {
-  ...required,
-  message: "{_field_} can not be empty",
-});
-
-extend("email", {
-  ...email,
-  message: "Email must be valid",
-});
-
 export default {
-  components: {
-    ValidationProvider,
-    ValidationObserver,
-  },
   computed: {
     ...mapGetters(["loggedInUser", "isAuthenticated"]),
   },
@@ -56,9 +56,7 @@ export default {
         (v) => !!v || "E-mail is required",
         (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
-      passwordRules: [
-        (v) => !!v || "Password is required",
-      ],
+      passwordRules: [(v) => !!v || "Password is required"],
       error: null,
     };
   },
@@ -67,40 +65,24 @@ export default {
       const validate = await this.$refs.form.validate();
       if (validate) {
         try {
-          await this.$auth.loginWith("local", {
+          const login = await this.$auth.loginWith("local", {
             data: {
               email: this.email,
               password: this.password,
             },
           });
-          this.$notify({
-            group: "notification",
-            title: "Hello",
-            type: "success",
-            text: "Your are now connected",
-          });
-        } catch (e) {
 
-          if(e.message !== "Network Error") {
-            this.error = e.response.data.message 
-            this.$notify({
-              group: "notification",
-              title: "Error",
-              type: "error",
-              text: e.response.data.message,
-            });
-          }else{
-            this.error = 'Serveur Problem Try it again in few minutes'
-            this.$notify({
-              group: "notification",
-              title: "Server Problem",
-              type: "error",
-              text: 'Try it again in few minutes',
-            });
-          }
+          this.printNotification('success','Hello', "Your are now connected")
+        } 
+        catch (e) {
+          if (e.message !== "Network Error")
+            this.printNotification('error','Error', e.response.data.message)
+          else
+            this.printNotification('error','Server Problem', "Try it again in few minutes")
         }
       }
     },
+
     clear() {
       this.email = "";
       this.password = "";
