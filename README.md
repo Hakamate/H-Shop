@@ -3,7 +3,7 @@
 ![WebSite Screen](https://i.ibb.co/wJ7f2xM/site-e-ecommerce.jpg)
 
 **H-Shop** it's a fronted prototype website made to create a easy and simple "Shop" with some feature which allow you to add product, or buy others.
-This project use my [H-Shop API](https://github.com/Hakamate/Adonis-eCommerce).
+This project use my [H-Shop API](https://github.com/Hakamate/H-Shop-API).
 
 ## Features
 <b>Products Features</b>
