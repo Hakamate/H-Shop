@@ -35,9 +35,9 @@ This project use my [H-Shop API](https://github.com/Hakamate/H-Shop-API).
 | Feature  |  Coded?       | Description  |
 |----------|:-------------:|:-------------|
 | Login | &#10004; | Allow User to be connected |
-| LogOut | &#10004; | Allow User to be disconnected |
+| Logout | &#10004; | Allow User to be disconnected |
 | Register | &#10004; | Allow Guest to create an Account |
-| Rules | &#10060; | Allow specific action for specific Users |
+| Rules | &#10060; | Allow specifics actions for specifics Users |
 
 
 ## Technologies
@@ -45,7 +45,7 @@ This project use my [H-Shop API](https://github.com/Hakamate/H-Shop-API).
 - NuxtJS (Vuejs Framework --> Frontend)
 - Vuetify (CSS Framework --> Style)
 - AdonisJS (NodeJS Framework --> Backend )
-- Postgre SQL (SGBDR)
+- PostgreSQL (SGBDR)
 
 
 ## How to build setup
