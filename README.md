@@ -2,7 +2,7 @@
 
 ![WebSite Screen](https://i.ibb.co/wJ7f2xM/site-e-ecommerce.jpg)
 
-**Nuxt-eCommerce** it's an prototype fronted website made to create a easy and simple "Shop" with some feature which allow you to add product, or buy others.
+**Nuxt-eCommerce** it's a fronted prototype website made to create a easy and simple "Shop" with some feature which allow you to add product, or buy others.
 This project use my [Adonis-eCommerce API](https://github.com/Hakamate/Adonis-eCommerce).
 
 ## Features
