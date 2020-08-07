@@ -17,7 +17,7 @@ This project use my [H-Shop API](https://github.com/Hakamate/H-Shop-API).
 
 <b>Purchase Features</b>
 
-| Feature  |  Coded?       | Description  |
+| Feature  |  Coded       | Description  |
 |----------|:-------------:|:-------------|
 | Create Cart | &#10060; | Create a new Cart |
 | See Cart | &#10060; | See all products on the Cart |
@@ -32,12 +32,12 @@ This project use my [H-Shop API](https://github.com/Hakamate/H-Shop-API).
 
 <b>User Features</b>
 
-| Feature  |  Coded?       | Description  |
+| Feature  |  Coded       | Description  |
 |----------|:-------------:|:-------------|
 | Login | &#10004; | Allow User to be connected |
 | Logout | &#10004; | Allow User to be disconnected |
 | Register | &#10004; | Allow Guest to create an Account |
-| Rules | &#10060; | Allow specifics actions for specifics Users |
+| Rules | &#10060; | Allow specific actions for specific Users |
 
 
 ## Technologies
