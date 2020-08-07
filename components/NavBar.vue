@@ -12,7 +12,7 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title d-flex">
-            <v-icon class="mr-2">mdi-account-circle</v-icon>Bonjour Thomas
+            <v-icon class="mr-2">mdi-account-circle</v-icon>Hello Thomas
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -107,7 +107,12 @@ export default {
       accountPages: [
         {
           icon: "mdi-account",
-          title: "Your Account",
+          title: "Account",
+          to: "/user/profile",
+        },
+        {
+          icon: "mdi-cart-arrow-right",
+          title: "Orders",
           to: "/user/profile",
         },
         {

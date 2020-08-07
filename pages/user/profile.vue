@@ -10,6 +10,12 @@
         </p>
       </div>
     </div>
+    <v-btn @click="createCart">
+      Create Your Cart
+    </v-btn>
+    <v-btn @click="getCart">
+      Get Cart
+    </v-btn>
     <v-btn @click="logout">
       LogOut<v-icon class="ml-2">mdi-close-box</v-icon>
     </v-btn>
@@ -33,6 +39,23 @@ export default {
         this.printNotification('error','Error', error.message)
       }
     },
+
+    async createCart(){
+      const response = this.$axios.post("createcart", {
+        params: {
+          id: this.loggedInUser.email
+        }
+      }).then((res) => console.log({res}))
+      .catch((rest) => console.log({rest}))
+    },
+
+    async getCart(){
+      const response = this.$axios.get("getcart", {
+        params: {
+          email: this.loggedInUser.email,
+        }
+      })
+    }
   }
 }
 </script>
