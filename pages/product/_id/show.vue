@@ -65,7 +65,7 @@ export default {
   },
   async mounted() {
     try {
-      const product = await this.$axios("getproduct", {
+      const product = await this.$axios("/api/getproduct", {
         params: {
           id: this.$route.params.id,
         },

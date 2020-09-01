@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import axios from "axios";
+
 
 export default {
   components: {},
@@ -118,15 +118,17 @@ export default {
         price: null,
         image: null
       },
-      dialog: false
+      dialog: false,
+      items: null
     };
   },
-  async asyncData({$axios}) {
+  async mounted() {
     try {
-      const products = await $axios.get('getproducts');
+      const products = await this.$axios.get("/api/getproducts");
+      console.log(products.data);
       return {items: products.data}
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   },
   methods: {

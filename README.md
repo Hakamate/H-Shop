@@ -64,3 +64,5 @@ $ yarn start
 # generate static project
 $ yarn generate
 ```
+
+Do not forget to rename .env.example into .env
